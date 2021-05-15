@@ -1,6 +1,7 @@
 package model
 
 import (
+	"fmt"
 	"github.com/go-gl/mathgl/mgl32"
 	"io/ioutil"
 	"os"
@@ -49,9 +50,14 @@ func TestObjReader_ReadObjFile(t *testing.T) {
 				return
 			}
 
+			fmt.Printf("%v", got.Vertices)
+
+			// TODO: this is not working as a check...
 			if reflect.DeepEqual(got, c.expected) {
 				t.Fatalf("Name: %v, Expected: %v, Got: %v", c.name, c.expected, got)
 			}
+
+			t.Errorf("")
 		})
 	}
 }

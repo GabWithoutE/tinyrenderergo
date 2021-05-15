@@ -64,8 +64,8 @@ func (obj *objReader) ReadObjFile(model *Model) error {
 		switch t {
 		case "v":
 			v := mgl32.Vec4{}
-			floats := make([]float32, 4)
-			if err := obj.parseFloatArguments(&floats, args); err != nil {
+			var floats []float32
+			if err := obj.parseFloatArguments(&floats, 4, args); err != nil {
 				return err
 			}
 			v[0], v[1], v[2], v[3] = floats[0], floats[1], floats[2], floats[3]
@@ -75,16 +75,16 @@ func (obj *objReader) ReadObjFile(model *Model) error {
 			model.Vertices = append(model.Vertices, v)
 		case "vt":
 			v := mgl32.Vec3{}
-			floats := make([]float32, 3)
-			if err := obj.parseFloatArguments(&floats, args); err != nil {
+			var floats []float32
+			if err := obj.parseFloatArguments(&floats, 3, args); err != nil {
 				return err
 			}
 			v[0], v[1], v[2] = floats[0], floats[1], floats[2]
 			model.Textures = append(model.Textures, v)
 		case "vn":
 			v := mgl32.Vec3{}
-			floats := make([]float32, 3)
-			if err := obj.parseFloatArguments(&floats, args); err != nil {
+			var floats []float32
+			if err := obj.parseFloatArguments(&floats, 3, args); err != nil {
 				return err
 			}
 			v[0], v[1], v[2] = floats[0], floats[1], floats[2]
@@ -102,9 +102,11 @@ func (obj *objReader) ReadObjFile(model *Model) error {
 				f := FaceElementPoint{}
 
 				vi, _ := strconv.Atoi(indices[0])
+				vi = vi - 1
 				f.VertexIndex = &vi
 
 				ti, err := strconv.Atoi(indices[1])
+				ti = ti - 1
 				if err != nil {
 					f.TextureIndex = nil
 				} else {
@@ -112,6 +114,7 @@ func (obj *objReader) ReadObjFile(model *Model) error {
 				}
 
 				ni, err := strconv.Atoi(indices[2])
+				ni = ni - 1
 				if err != nil {
 					f.NormalIndex = nil
 				} else {
@@ -131,15 +134,18 @@ func (obj *objReader) ReadObjFile(model *Model) error {
 	return nil
 }
 
-func (obj *objReader) parseFloatArguments(floats *[]float32, args []string) error {
-	for i := 1; i < len(args); i++ {
+func (obj *objReader) parseFloatArguments(floats *[]float32, length int, args []string) error {
+	out := make([]float32, length)
+	for i := 0; i < len(args); i++ {
 		f, err := strconv.ParseFloat(args[i], 32)
 		if err != nil {
 			return err
 		}
 
-		*floats = append(*floats, float32(f))
+		out[i] = float32(f)
 	}
+
+	*floats = out
 
 	return nil
 }
