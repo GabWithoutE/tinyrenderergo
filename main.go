@@ -11,8 +11,6 @@ import (
 )
 
 func main() {
-	//defer profile.Start(profile.TraceProfile, profile.ProfilePath(".")).Stop()
-
 	f, err := os.Create("output.png")
 	if err != nil {
 		panic(err)
@@ -21,6 +19,10 @@ func main() {
 
 	width := 1000
 	height := 1000
+
+	widestpix := width - 1
+	highestpix := height - 1
+
 	img := image2.NewRGBAImage(image.Rect(0, 0, width, height))
 
 	m := model.Model{
@@ -38,12 +40,12 @@ func main() {
 	for _, face := range m.Faces {
 		for i, point := range face.Points {
 			v0 := m.Vertices[*point.VertexIndex]
-			v1 := m.Vertices[*face.Points[(i+1)%3].VertexIndex]
+			v1 := m.Vertices[*face.Points[(i + 1) % 3].VertexIndex]
 
-			x0 := ((v0.X() + 1.) / 2.) * float32(width-1)
-			y0 := ((v0.Y() + 1.) / 2.) * float32(height-1)
-			x1 := ((v1.X() + 1.) / 2.) * float32(width-1)
-			y1 := ((v1.Y() + 1.) / 2.) * float32(height-1)
+			x0 := ((v0.X() + 1.) / 2.) * float32(widestpix)
+			y0 := ((v0.Y() + 1.) / 2.) * float32(highestpix)
+			x1 := ((v1.X() + 1.) / 2.) * float32(widestpix)
+			y1 := ((v1.Y() + 1.) / 2.) * float32(highestpix)
 			img.Line(int(x0), int(y0), int(x1), int(y1), image2.Color{255, 255, 255, 255})
 		}
 	}
