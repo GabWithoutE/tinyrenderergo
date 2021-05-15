@@ -10,13 +10,13 @@ import (
 )
 
 func TestObjReader_ReadObjFile(t *testing.T) {
-	cases := []struct{
-		name string
+	cases := []struct {
+		name             string
 		testFileContents string
-		expected Model
-		isErrorExpected bool
+		expected         Model
+		isErrorExpected  bool
 	}{
-		{	"nothing special",
+		{"nothing special",
 			"v 1 1 1\n v 2 2 2 2\n v 3 3 3\n vt 3 3 3\n vt 4 4 4\n vn 5 5 5\n vn 6 6 6\n f // // //\n",
 			Model{Vertices: []mgl32.Vec4{mgl32.Vec4{1, 1, 1, 1}, mgl32.Vec4{2, 2, 2, 2}, mgl32.Vec4{3, 3, 3, 3}}, Textures: []mgl32.Vec3{mgl32.Vec3{3, 3, 3}, mgl32.Vec3{4, 4, 4}}, Normals: []mgl32.Vec3{mgl32.Vec3{5, 5, 5}, mgl32.Vec3{6, 6, 6}}, Faces: []FaceElement{FaceElement{[3]FaceElementPoint{FaceElementPoint{nil, nil, nil}, FaceElementPoint{nil, nil, nil}, FaceElementPoint{nil, nil, nil}}}}},
 			false,
@@ -38,7 +38,7 @@ func TestObjReader_ReadObjFile(t *testing.T) {
 			r := NewObjReader(file.Name())
 			got := Model{
 				Vertices: make([]mgl32.Vec4, 0),
-				Normals: make([]mgl32.Vec3, 0),
+				Normals:  make([]mgl32.Vec3, 0),
 				Textures: make([]mgl32.Vec3, 0),
 			}
 

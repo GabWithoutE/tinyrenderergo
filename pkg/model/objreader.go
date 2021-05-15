@@ -39,7 +39,7 @@ func NewObjReader(file string) ObjReader {
 
 type objLine struct {
 	index int
-	line string
+	line  string
 }
 
 func (obj *objReader) ReadObjFile(model *Model) error {

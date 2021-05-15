@@ -5,7 +5,7 @@ import "github.com/go-gl/mathgl/mgl32"
 type Model struct {
 	Vertices []mgl32.Vec4
 	Textures []mgl32.Vec3
-	Normals []mgl32.Vec3
+	Normals  []mgl32.Vec3
 
 	Faces []FaceElement
 }
@@ -18,7 +18,7 @@ type FaceElement struct {
 // a single set of vertex_index/texture_index/normal_index
 // 		3 or more of these makes a face element
 type FaceElementPoint struct {
-	VertexIndex *int
+	VertexIndex  *int
 	TextureIndex *int
-	NormalIndex *int
+	NormalIndex  *int
 }

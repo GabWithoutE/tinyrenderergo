@@ -20,16 +20,16 @@ func NewRGBAImage(rectangle image.Rectangle) *ImgRGBA {
 func (i *ImgRGBA) Set(x int, y int, color Color) {
 	p := i.RGBA.PixOffset(x, y)
 	i.RGBA.Pix[p] = color[0]
-	i.RGBA.Pix[p+ 1] = color[1]
-	i.RGBA.Pix[p+ 2] = color[2]
-	i.RGBA.Pix[p+ 3] = color[3]
+	i.RGBA.Pix[p+1] = color[1]
+	i.RGBA.Pix[p+2] = color[2]
+	i.RGBA.Pix[p+3] = color[3]
 }
 
 func (i *ImgRGBA) Line(x0 int, y0 int, x1 int, y1 int, color Color) {
 	steep := false
 	// flipping x and y when the line is steep allows for the rounding to be
 	// 		done at higher resolution.
-	if math.Abs(float64(x0 - x1)) < math.Abs(float64(y0 - y1)) {
+	if math.Abs(float64(x0-x1)) < math.Abs(float64(y0-y1)) {
 		x0, y0 = y0, x0
 		x1, y1 = y1, x1
 		steep = true
