@@ -1,8 +1,11 @@
 package draw
 
-import "math"
+import (
+	"github.com/pkg/errors"
+	"math"
+)
 
-func (i *ImgRGBA) Line(x0 int, y0 int, x1 int, y1 int, color Color) {
+func (i *ImgRGBA) Line(x0 int, y0 int, x1 int, y1 int, color Color) error {
 	steep := false
 	// flipping x and y when the line is steep allows for the rounding to be
 	// 		done at higher resolution.
@@ -26,9 +29,13 @@ func (i *ImgRGBA) Line(x0 int, y0 int, x1 int, y1 int, color Color) {
 
 	for x := x0; x <= x1; x++ {
 		if steep {
-			i.Set(y, x, color)
+			if err := i.SetPixel(y, x, color); err != nil {
+				return errors.Wrap(err, "draw.Line: SetPixel error")
+			}
 		} else {
-			i.Set(x, y, color)
+			if err := i.SetPixel(x, y, color); err != nil {
+				return errors.Wrap(err, "draw.Line: SetPixel error")
+			}
 		}
 
 		error2 += derror2
@@ -41,4 +48,6 @@ func (i *ImgRGBA) Line(x0 int, y0 int, x1 int, y1 int, color Color) {
 			error2 -= dx * 2
 		}
 	}
+
+	return nil
 }

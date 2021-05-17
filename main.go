@@ -46,12 +46,14 @@ func main() {
 			y0 := ((v0.Y() + 1.) / 2.) * float32(highestpix)
 			x1 := ((v1.X() + 1.) / 2.) * float32(widestpix)
 			y1 := ((v1.Y() + 1.) / 2.) * float32(highestpix)
-			img.Line(int(x0), int(y0), int(x1), int(y1), draw.Color{255, 255, 255, 255})
+			if err := img.Line(int(x0), int(y0), int(x1), int(y1), draw.Color{255, 255, 255, 255}); err != nil {
+				fmt.Printf("%+v\n", err)
+			}
 		}
 	}
 
-	err = png.Encode(f, img)
-	if err != nil {
+
+	if err = png.Encode(f, img); err != nil {
 		fmt.Printf("%+v\n", err)
 	}
 }
