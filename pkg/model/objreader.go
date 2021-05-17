@@ -20,7 +20,7 @@ import (
 // 		vp (u, [,v] [,w])
 // Polygonal face elements:
 // 		f vertex_index/texture_index/normal_index (x3 for tri or more for quad)
-// Line element
+// DrawLine element
 // 		l vertices
 
 type ObjReader interface {

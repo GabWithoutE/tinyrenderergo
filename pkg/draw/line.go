@@ -5,7 +5,7 @@ import (
 	"math"
 )
 
-func (i *ImgRGBA) Line(x0 int, y0 int, x1 int, y1 int, color Color) error {
+func (i *ImgRGBA) DrawLine(x0 int, y0 int, x1 int, y1 int, color Color) error {
 	steep := false
 	// flipping x and y when the line is steep allows for the rounding to be
 	// 		done at higher resolution.
@@ -30,11 +30,11 @@ func (i *ImgRGBA) Line(x0 int, y0 int, x1 int, y1 int, color Color) error {
 	for x := x0; x <= x1; x++ {
 		if steep {
 			if err := i.SetPixel(y, x, color); err != nil {
-				return errors.Wrap(err, "draw.Line: SetPixel error")
+				return errors.Wrap(err, "draw.DrawLine: SetPixel error")
 			}
 		} else {
 			if err := i.SetPixel(x, y, color); err != nil {
-				return errors.Wrap(err, "draw.Line: SetPixel error")
+				return errors.Wrap(err, "draw.DrawLine: SetPixel error")
 			}
 		}
 

@@ -21,7 +21,7 @@ func (i *ImgRGBA) SetPixel(x int, y int, color Color) error {
 	p := i.RGBA.PixOffset(i.RGBA.Rect.Max.X-1-x, i.RGBA.Rect.Max.Y-1-y)
 
 	// check for index out of range error, and return it for easier debugging
-	if p >= len(i.RGBA.Pix) - 1 {
+	if p >= len(i.RGBA.Pix)-1 {
 		return fmt.Errorf("ImgRGBA.SetPixel: Index out of Range[%v] Length[%v]", p, len(i.RGBA.Pix))
 	}
 
