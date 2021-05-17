@@ -56,8 +56,6 @@ func TestObjReader_ReadObjFile(t *testing.T) {
 			if reflect.DeepEqual(got, c.expected) {
 				t.Fatalf("Name: %v, Expected: %v, Got: %v", c.name, c.expected, got)
 			}
-
-			t.Errorf("")
 		})
 	}
 }

@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	image2 "github.com/gabriellukechen/tinyrenderergo/pkg/image"
+	"github.com/gabriellukechen/tinyrenderergo/pkg/draw"
 	"github.com/gabriellukechen/tinyrenderergo/pkg/model"
 	"github.com/go-gl/mathgl/mgl32"
 	"image"
@@ -23,7 +23,7 @@ func main() {
 	widestpix := width - 1
 	highestpix := height - 1
 
-	img := image2.NewRGBAImage(image.Rect(0, 0, width, height))
+	img := draw.NewRGBAImage(image.Rect(0, 0, width, height))
 
 	m := model.Model{
 		Vertices: make([]mgl32.Vec4, 0),
@@ -40,13 +40,13 @@ func main() {
 	for _, face := range m.Faces {
 		for i, point := range face.Points {
 			v0 := m.Vertices[*point.VertexIndex]
-			v1 := m.Vertices[*face.Points[(i + 1) % 3].VertexIndex]
+			v1 := m.Vertices[*face.Points[(i+1)%3].VertexIndex]
 
 			x0 := ((v0.X() + 1.) / 2.) * float32(widestpix)
 			y0 := ((v0.Y() + 1.) / 2.) * float32(highestpix)
 			x1 := ((v1.X() + 1.) / 2.) * float32(widestpix)
 			y1 := ((v1.Y() + 1.) / 2.) * float32(highestpix)
-			img.Line(int(x0), int(y0), int(x1), int(y1), image2.Color{255, 255, 255, 255})
+			img.Line(int(x0), int(y0), int(x1), int(y1), draw.Color{255, 255, 255, 255})
 		}
 	}
 

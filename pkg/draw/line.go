@@ -1,35 +1,12 @@
-package image
+package draw
 
-import (
-	"image"
-	"math"
-)
-
-type ImgRGBA struct {
-	*image.RGBA
-}
-
-type Color [4]uint8
-
-func NewRGBAImage(rectangle image.Rectangle) *ImgRGBA {
-	return &ImgRGBA{
-		image.NewRGBA(rectangle),
-	}
-}
-
-func (i *ImgRGBA) Set(x int, y int, color Color) {
-	p := i.RGBA.PixOffset(i.RGBA.Rect.Max.X - 1 - x, i.RGBA.Rect.Max.Y - 1 - y)
-	i.RGBA.Pix[p] = color[0]
-	i.RGBA.Pix[p + 1] = color[1]
-	i.RGBA.Pix[p + 2] = color[2]
-	i.RGBA.Pix[p + 3] = color[3]
-}
+import "math"
 
 func (i *ImgRGBA) Line(x0 int, y0 int, x1 int, y1 int, color Color) {
 	steep := false
 	// flipping x and y when the line is steep allows for the rounding to be
 	// 		done at higher resolution.
-	if math.Abs(float64(x0 - x1)) < math.Abs(float64(y0 - y1)) {
+	if math.Abs(float64(x0-x1)) < math.Abs(float64(y0-y1)) {
 		x0, y0 = y0, x0
 		x1, y1 = y1, x1
 		steep = true
