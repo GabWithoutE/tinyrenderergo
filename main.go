@@ -20,8 +20,8 @@ func main() {
 	width := 1000
 	height := 1000
 
-	//widestpix := width - 1
-	//highestpix := height - 1
+	widestpix := width - 1
+	highestpix := height - 1
 
 	img := draw.NewRGBAImage(image.Rect(0, 0, width, height))
 
@@ -37,28 +37,28 @@ func main() {
 		fmt.Printf("failed to read obj file %+v", err)
 	}
 
-	//for _, face := range m.Faces {
-	//	for i, point := range face.Points {
-	//		v0 := m.Vertices[*point.VertexIndex]
-	//		v1 := m.Vertices[*face.Points[(i+1)%3].VertexIndex]
-	//
-	//		x0 := ((v0.X() + 1.) / 2.) * float32(widestpix)
-	//		y0 := ((v0.Y() + 1.) / 2.) * float32(highestpix)
-	//		x1 := ((v1.X() + 1.) / 2.) * float32(widestpix)
-	//		y1 := ((v1.Y() + 1.) / 2.) * float32(highestpix)
-	//		if err := img.DrawLine(int(x0), int(y0), int(x1), int(y1), draw.Color{255, 255, 255, 255}); err != nil {
-	//			fmt.Printf("%+v\n", err)
-	//		}
-	//	}
-	//}
+	for _, face := range m.Faces {
+		for i, point := range face.Points {
+			v0 := m.Vertices[*point.VertexIndex]
+			v1 := m.Vertices[*face.Points[(i+1)%3].VertexIndex]
 
-	if err := img.DrawFilledTriangle(
-		draw.LineSweep,
-		[3]mgl32.Vec4{mgl32.Vec4{0, 0, 0, 0}, mgl32.Vec4{999, 0, 0, 0}, mgl32.Vec4{500, 999, 0, 0}},
-		draw.Color{255, 255, 255, 255},
-	); err != nil {
-		fmt.Printf("failed to draw triangle, %+v\n", err)
+			x0 := ((v0.X() + 1.) / 2.) * float32(widestpix)
+			y0 := ((v0.Y() + 1.) / 2.) * float32(highestpix)
+			x1 := ((v1.X() + 1.) / 2.) * float32(widestpix)
+			y1 := ((v1.Y() + 1.) / 2.) * float32(highestpix)
+			if err := img.DrawLine(int(x0), int(y0), int(x1), int(y1), draw.Color{255, 255, 255, 255}); err != nil {
+				fmt.Printf("%+v\n", err)
+			}
+		}
 	}
+
+	//if err := img.DrawFilledTriangle(
+	//	draw.LineSweep,
+	//	[3]mgl32.Vec4{mgl32.Vec4{0, 0, 0, 0}, mgl32.Vec4{999, 0, 0, 0}, mgl32.Vec4{500, 999, 0, 0}},
+	//	draw.Color{255, 255, 255, 255},
+	//); err != nil {
+	//	fmt.Printf("failed to draw triangle, %+v\n", err)
+	//}
 
 	if err = png.Encode(f, img); err != nil {
 		fmt.Printf("%+v\n", err)
