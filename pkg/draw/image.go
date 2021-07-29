@@ -22,7 +22,7 @@ func (i *ImgRGBA) SetPixel(x int, y int, color Color) error {
 
 	// check for index out of range error, and return it for easier debugging
 	if p >= len(i.RGBA.Pix)-1 {
-		return fmt.Errorf("ImgRGBA.SetPixel: Index out of Range[%v] Length[%v]", p, len(i.RGBA.Pix))
+		return fmt.Errorf("ImgRGBA.SetPixel: Index out of range, Index[%v] Range[%v]", p, len(i.RGBA.Pix))
 	}
 
 	i.RGBA.Pix[p] = color[0]

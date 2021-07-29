@@ -1,7 +1,6 @@
 package draw
 
 import (
-	"fmt"
 	"github.com/go-gl/mathgl/mgl32"
 	"github.com/pkg/errors"
 )
@@ -50,18 +49,17 @@ func (i *ImgRGBA) lineSweep(vertices [3]mgl32.Vec4, color Color) error {
 		// TODO: maybe fix the readability of this implementation
 		if vertex.Y()-vertices[vi].Y() != 0 {
 			slope = (vertex.X() - vertices[vi].X()) / (vertex.Y() - vertices[vi].Y())
-			fmt.Printf("slope: %v, x diff: %v, y diff: %v\n", slope, vertex.X()-vertices[vi].X(), vertex.Y()-vertices[vi].Y())
 		}
 		x := vertices[vi].X()
 
 		for currentLine >= bottomLine {
-			basisX -= basisSlope
-			x -= slope
-			currentLine -= 1
-
 			if err := i.DrawLine(int(x+0.5), int(currentLine), int(basisX+0.5), int(currentLine), color); err != nil {
 				return errors.Wrap(err, "draw.DrawFilledTriangle.lineSweep: failed to draw line")
 			}
+
+			basisX -= basisSlope
+			x -= slope
+			currentLine -= 1
 		}
 	}
 

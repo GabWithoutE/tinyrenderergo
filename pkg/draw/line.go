@@ -30,12 +30,10 @@ func (i *ImgRGBA) DrawLine(x0 int, y0 int, x1 int, y1 int, color Color) error {
 	for x := x0; x <= x1; x++ {
 		if steep {
 			if err := i.SetPixel(y, x, color); err != nil {
-				return errors.Wrap(err, "draw.DrawLine: SetPixel error")
+				return errors.Wrap(err, "draw.DrawLine: SetPixel error steep")
 			}
-		} else {
-			if err := i.SetPixel(x, y, color); err != nil {
-				return errors.Wrap(err, "draw.DrawLine: SetPixel error")
-			}
+		} else if err := i.SetPixel(x, y, color); err != nil {
+			return errors.Wrap(err, "draw.DrawLine: SetPixel error")
 		}
 
 		error2 += derror2
